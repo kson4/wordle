@@ -1,5 +1,6 @@
-const tiles = document.querySelector(".tiles")
+import { inputLetter } from "./game-logic.js"
 
+const tiles = document.querySelector(".tiles")
 const gameTiles = [
   ["", "", "", "", ""],
   ["", "", "", "", ""],
@@ -11,12 +12,18 @@ const gameTiles = [
 gameTiles.forEach((gameTile, idx) => {
   const row = document.createElement("div")
   row.setAttribute("id", `r${idx}`)
-  gameTiles.forEach((column, cIdx) => {
+  gameTile.forEach((column, cIdx) => {
     const tile = document.createElement("div")
     tile.setAttribute("id", `r${idx}c${cIdx}`)
     row.append(tile)
   })
   tiles.append(row)
+})
+
+document.addEventListener("keydown", (event) => {
+  if (event.key >= "a" && event.key <= "z") {
+    inputLetter(event.key)
+  }
 })
 
 const keyboard = document.querySelector(".keyboard")
@@ -27,12 +34,13 @@ const keys = [
 ]
 keys.forEach(key => {
   const button = document.createElement("button")
-  button.innerHTML = key
+  button.textContent = key
   button.setAttribute("id", key)
-  button.addEventListener("click", keyClicked)
+  button.addEventListener("click", () => keyClicked(key))
   keyboard.appendChild(button)
 })
 
-function keyClicked() {
-  console.log("clicked")
+function keyClicked(key) {
+  console.log("clicked", key)
+  inputLetter(key)
 }

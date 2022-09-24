@@ -3,6 +3,8 @@ import { inputLetter, invalid, removeLetter, } from "./game-logic.js"
 async function getWordleCall() {
   const res = await fetch("https://random-word-api.herokuapp.com/word?length=5")
   const data = await res.json()
+  document.querySelector(".container").style.visibility = "visible"
+  document.querySelector(".loader").style.visibility = "hidden"
   return data
 }
 

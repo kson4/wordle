@@ -25,6 +25,7 @@ gameTiles.forEach((gameTile, idx) => {
   gameTile.forEach((column, cIdx) => {
     const tile = document.createElement("div")
     tile.setAttribute("id", `r${idx}c${cIdx}`)
+    tile.setAttribute("class", "tile")
     row.append(tile)
   })
   tiles.append(row)

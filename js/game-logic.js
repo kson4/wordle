@@ -49,15 +49,6 @@ async function isValidWord() {
   return data
 }
 
-// async function getWordleCall() {
-//   const res = await fetch("https://random-word-api.herokuapp.com/word?length=5")
-//   const data = await res.json()
-//   return data
-// }
-
-// export const wordle = await getWordleCall()
-// console.log(wordle)
-
 export function removeLetter() {
   console.log(currentColumn)
   document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = ""
@@ -71,14 +62,19 @@ export function removeLetter() {
 function checkWord() {
   const guess = gameTiles[currentRow].join("")
   if (guess == wordle) {
+    for (let i = 0; i < 5; i++) {
+      document.querySelector(`#r${currentRow}c${i}`).classList.add("green")
+    }
     winner()
   }
   else {
     const wordleCount = new Map()
     for (let i = 0; i < 5; i++) {
       // match found -- in right spot
+      const tile = document.querySelector(`#r${currentRow}c${i}`)
       if (wordle[0][i] == guess[i]) {
         console.log("match!")
+        tile.classList.add("green")
       }
       // not a match -- add it into the map
       else if (wordle[0][i] != guess[i]) {
@@ -92,12 +88,17 @@ function checkWord() {
     }
 
     for (let i = 0; i < 5; i++) {
+      const tile = document.querySelector(`#r${currentRow}c${i}`)
       // match found -- not in right spot
       if (wordleCount.has(guess[i])) {
         wordleCount.set(guess[i], wordleCount.get(guess[i]) - 1)
         if (wordleCount.get(guess[i]) == 0) {
           wordleCount.delete(guess[i])
         }
+        tile.classList.add("yellow")
+      }
+      else {
+        tile.classList.add("red")
       }
     }
     console.log(wordleCount)
@@ -126,8 +127,7 @@ function winner() {
 export function invalid() {
   for (let i = 0; i < 5; i++) {
     const tile = document.querySelector(`#r${currentRow}c` + i)
-    tile.setAttribute("class", "invalid-shake")
+    tile.classList.add("invalid-shake")
     setTimeout(() => {tile.classList.remove("invalid-shake")}, 250)
-    // console.log(tile)
   }
 }

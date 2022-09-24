@@ -6,13 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wordle</title>
   <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/loader.css">
+  <link rel="stylesheet" href="./css/game.css">
+  <link rel="stylesheet" href="./css/keyboard.css">
+  <link rel="stylesheet" href="./css/suggestions.css">
 </head>
 <body>
   <div class="loader"></div>
+  <div class="word-list"></div>
+
+  <div class="suggestions">
+    <div class="search-input">
+      <input type="text" placeHolder="Searching...">
+      <div class="suggestion-list">
+      </div>
+    </div>
+  </div>
+  
   <div class="container">
+    
     <div class="navbar">
       <h1 class="title">Wordle</h1>
     </div>
+
     <div class="game">
       <div class="tiles"></div>
 
@@ -27,8 +43,9 @@
     </div>
     
   </div>
-  
-  <script src="./js/setup.js" type="module"></script>
+  <script src="./js/game-setup.js" type="module"></script>
   <script src="./js/game-logic.js" type="module"></script>
+  <script src="./js/suggestions.js" type="module"></script>
+  <script src="./js/word-list.js" type="module"></script>
 </body>
 </html>

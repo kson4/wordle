@@ -1,10 +1,10 @@
-import {gameTiles, wordle} from "./setup.js"
+import {gameTiles, wordle} from "./game-setup.js"
 
 let currentRow = 0
 let currentColumn = 0
 
 export async function inputLetter(key) {
-  console.log(currentColumn, key)
+  // console.log(currentColumn, key)
   
   if (key == "Enter") {
     if (currentColumn < 4 || gameTiles[currentRow][4] == "") {

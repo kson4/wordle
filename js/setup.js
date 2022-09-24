@@ -11,7 +11,7 @@ console.log(wordle)
 
 const tiles = document.querySelector(".tiles")
 export const gameTiles = [
-  ["a", "", "", "", ""],
+  ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
@@ -30,10 +30,8 @@ gameTiles.forEach((gameTile, idx) => {
   tiles.append(row)
 })
 
-invalid()
-
 document.addEventListener("keydown", (event) => {
-  if (event.key >= "a" && event.key <= "z") {
+  if (event.key >= "a" && event.key <= "z" || event.key == "Enter") {
     inputLetter(event.key)
   }
   if (event.key === "Backspace") {
@@ -51,8 +49,11 @@ keys.forEach(key => {
   const button = document.createElement("button")
   button.textContent = key
   button.setAttribute("id", key)
-  if (key === "<<") {
+  if (key == "<<") {
     button.addEventListener("click", removeLetter)
+  }
+  else if (key == "ENTER") {
+    button.addEventListener("click", () => keyClicked("Enter"))
   }
   else {
     button.addEventListener("click", () => keyClicked(key.toLowerCase()))
@@ -62,6 +63,5 @@ keys.forEach(key => {
 })
 
 function keyClicked(key) {
-  console.log("clicked", key)
   inputLetter(key)
 }

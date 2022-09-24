@@ -3,67 +3,113 @@ import {gameTiles, wordle} from "./setup.js"
 let currentRow = 0
 let currentColumn = 0
 
-export function inputLetter(key) {
-  document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = key
-  gameTiles[currentRow][currentColumn] = key
 
-  updateRowColumn()
-  checkWord()
+
+export async function inputLetter(key) {
+  console.log(currentColumn, key)
+  if (key == "Enter") {
+    // can only submit a 5 letter word
+    if (currentColumn == 4) {
+      // word is in dictionary
+      if (await submitWord()) {
+        checkWord()
+        updateRowColumn(key)
+      }
+      else {
+        invalid()
+      }
+    }
+    else {
+      invalid()
+    }
+  }
+  else {
+    document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = key
+    gameTiles[currentRow][currentColumn] = key
+    updateRowColumn(key)
+  }
 }
 
-export function removeLetter() {
-  if (currentColumn > 0) {
-    currentColumn -= 1
-    document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = ""
-    gameTiles[currentRow][currentColumn] = ""
+async function submitWord() {
+  console.log("ENTER")
+  const data = await isValidWord()
+  if (data.title == "No Definitions Found") {
+    return false
   }
+  else {
+    console.log("WORD FOUND")
+    return true
+  }
+}
+
+async function isValidWord() {
+  const guess = gameTiles[currentRow].join("")
+  const res = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${guess}`)
+  const data = await res.json()
+  return data
+}
+
+// async function getWordleCall() {
+//   const res = await fetch("https://random-word-api.herokuapp.com/word?length=5")
+//   const data = await res.json()
+//   return data
+// }
+
+// export const wordle = await getWordleCall()
+// console.log(wordle)
+
+export function removeLetter() {
+  console.log(currentColumn)
+  document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = ""
+  gameTiles[currentRow][currentColumn] = ""
+  if (currentColumn != 0) {
+    currentColumn -= 1
+  }
+  return currentColumn
 }
 
 function checkWord() {
-  if (currentColumn == 5) {
-    const guess = gameTiles[currentRow].join("")
-    if (guess == wordle) {
-      winner()
-    }
-    else {
-      const wordleCount = new Map()
-      for (let i = 0; i < 5; i++) {
-        // match found -- in right spot
-        if (wordle[0][i] == guess[i]) {
-          console.log("match!")
+  const guess = gameTiles[currentRow].join("")
+  if (guess == wordle) {
+    winner()
+  }
+  else {
+    const wordleCount = new Map()
+    for (let i = 0; i < 5; i++) {
+      // match found -- in right spot
+      if (wordle[0][i] == guess[i]) {
+        console.log("match!")
+      }
+      // not a match -- add it into the map
+      else if (wordle[0][i] != guess[i]) {
+        if (wordleCount.has(wordle[0][i])) {
+          wordleCount.set(wordle[0][i], wordleCount.get(wordle[0][i]) + 1)
         }
-        // not a match -- add it into the map
-        else if (wordle[0][i] != guess[i]) {
-          if (wordleCount.has(wordle[0][i])) {
-            wordleCount.set(wordle[0][i], wordleCount.get(wordle[0][i]) + 1)
-          }
-          else {
-            wordleCount.set(wordle[0][i], 1)
-          }
+        else {
+          wordleCount.set(wordle[0][i], 1)
         }
       }
+    }
 
-      for (let i = 0; i < 5; i++) {
-        // match found -- not in right spot
-        if (wordleCount.has(guess[i])) {
-          wordleCount.set(guess[i], wordleCount.get(guess[i]) - 1)
-          if (wordleCount.get(guess[i]) == 0) {
-            wordleCount.delete(guess[i])
-          }
+    for (let i = 0; i < 5; i++) {
+      // match found -- not in right spot
+      if (wordleCount.has(guess[i])) {
+        wordleCount.set(guess[i], wordleCount.get(guess[i]) - 1)
+        if (wordleCount.get(guess[i]) == 0) {
+          wordleCount.delete(guess[i])
         }
       }
-      console.log(wordleCount)
-      updateRowColumn()
     }
+    console.log(wordleCount)
+    updateRowColumn()
   }
 }
 
-function updateRowColumn() {
-  // console.log(currentRow + " " + currentColumn)
-  if (currentColumn < 5) {
+function updateRowColumn(key) {
+  if (currentColumn < 4) {
     currentColumn += 1
   }
-  else {
+  else if (currentColumn == 4 && key == "Enter") {
     currentRow += 1
     currentColumn = 0
   }
@@ -78,15 +124,10 @@ function winner() {
 }
 
 export function invalid() {
-
   for (let i = 0; i < 5; i++) {
     const tile = document.querySelector(`#r${currentRow}c` + i)
     tile.setAttribute("class", "invalid-shake")
     setTimeout(() => {tile.classList.remove("invalid-shake")}, 250)
-    console.log(tile)
+    // console.log(tile)
   }
-
-  setTimeout(() => {
-
-  })
 }

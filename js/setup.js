@@ -1,4 +1,4 @@
-import { inputLetter, removeLetter } from "./game-logic.js"
+import { inputLetter, invalid, removeLetter, } from "./game-logic.js"
 
 async function getWordleCall() {
   const res = await fetch("https://random-word-api.herokuapp.com/word?length=5")
@@ -6,17 +6,19 @@ async function getWordleCall() {
   return data
 }
 
-const wordle = await getWordleCall()
+export const wordle = await getWordleCall()
+console.log(wordle)
 
 const tiles = document.querySelector(".tiles")
 export const gameTiles = [
-  ["", "", "", "", ""],
+  ["a", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""]
 ]
+
 gameTiles.forEach((gameTile, idx) => {
   const row = document.createElement("div")
   row.setAttribute("id", `r${idx}`)
@@ -27,6 +29,8 @@ gameTiles.forEach((gameTile, idx) => {
   })
   tiles.append(row)
 })
+
+invalid()
 
 document.addEventListener("keydown", (event) => {
   if (event.key >= "a" && event.key <= "z") {
@@ -51,7 +55,7 @@ keys.forEach(key => {
     button.addEventListener("click", removeLetter)
   }
   else {
-    button.addEventListener("click", () => keyClicked(key))
+    button.addEventListener("click", () => keyClicked(key.toLowerCase()))
   }
   
   keyboard.appendChild(button)

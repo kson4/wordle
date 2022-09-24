@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: #2f2f2f;
+}
+
+.container {
+  color: white;
+}
+
 .title {
   text-align: center;
   font-size: 30px;
@@ -18,7 +26,6 @@
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  border: 1px solid black;
 }
 .tiles {
   display: flex;
@@ -39,6 +46,8 @@
   font-size: 25px;
   border: 1px solid black;
   text-transform: uppercase;
+  background-color: gray;
+  border-radius: 5px;
 }
 
 .keyboard {
@@ -59,3 +68,15 @@
 #ENTER, #\<\< {
   width: 65px;
 }
+
+.invalid-shake {
+  animation: invalid-shake 0.25s infinite;
+}
+
+@keyframes invalid-shake {
+  0% { transform: translateX(0) }
+  25% { transform: translateX(5px) }
+  50% { transform: translateX(-5px) }
+  75% { transform: translateX(5px) }
+  100% { transform: translateX(0) }
+ }

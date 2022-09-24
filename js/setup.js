@@ -32,10 +32,10 @@ gameTiles.forEach((gameTile, idx) => {
 })
 
 document.addEventListener("keydown", (event) => {
-  if (event.key >= "a" && event.key <= "z" || event.key == "Enter") {
+  if (event.key >= "a" && event.key <= "z" || event.key == "Enter" || event.jey == "Backspace") {
     inputLetter(event.key)
   }
-  if (event.key === "Backspace") {
+  if (event.key == "Backspace") {
     removeLetter()
   }
 })

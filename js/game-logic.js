@@ -3,35 +3,33 @@ import {gameTiles, wordle} from "./setup.js"
 let currentRow = 0
 let currentColumn = 0
 
-
-
 export async function inputLetter(key) {
   console.log(currentColumn, key)
+  
   if (key == "Enter") {
-    // can only submit a 5 letter word
-    if (currentColumn == 4) {
-      // word is in dictionary
-      if (await submitWord()) {
+    if (currentColumn < 4 || gameTiles[currentRow][4] == "") {
+      invalid()
+    }
+    else {
+      if (currentColumn == 4 && await submitWord()) {
         checkWord()
         updateRowColumn(key)
       }
       else {
+        errorMessage()
         invalid()
       }
     }
-    else {
-      invalid()
-    }
   }
-  else {
+  else if (key != "Backspace") {
     document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = key
     gameTiles[currentRow][currentColumn] = key
     updateRowColumn(key)
+    removeErrorMessage()
   }
 }
 
 async function submitWord() {
-  console.log("ENTER")
   const data = await isValidWord()
   if (data.title == "No Definitions Found") {
     return false
@@ -51,12 +49,12 @@ async function isValidWord() {
 
 export function removeLetter() {
   console.log(currentColumn)
-  document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = ""
-  gameTiles[currentRow][currentColumn] = ""
-  if (currentColumn != 0) {
+  if (currentColumn > 0) {
     currentColumn -= 1
   }
-  return currentColumn
+  
+  document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = ""
+  gameTiles[currentRow][currentColumn] = ""
 }
 
 function checkWord() {
@@ -130,4 +128,14 @@ export function invalid() {
     tile.classList.add("invalid-shake")
     setTimeout(() => {tile.classList.remove("invalid-shake")}, 250)
   }
+}
+
+function errorMessage() {
+  const guess = gameTiles[currentRow].join("")
+  document.querySelector(".word").textContent = guess;
+  document.querySelector(".error").style.visibility = "visible"
+}
+
+function removeErrorMessage() {
+  document.querySelector(".error").style.visibility = "hidden"
 }

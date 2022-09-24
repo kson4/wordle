@@ -50,6 +50,17 @@ body {
   border-radius: 5px;
 }
 
+.message {
+  
+}
+
+.error {
+  display: flex;
+  flex-direction: row;
+  visibility: hidden;
+  gap: 6px;
+}
+
 .keyboard {
   width: 450px;
 }
@@ -70,13 +81,13 @@ body {
 }
 
 .green {
-  background-color: green !important;
+  background-color: #538d4e !important;
 }
 .yellow {
-  background-color: yellow;
+  background-color: #b59f3b;
 }
 .red {
-  background-color: red;
+  background-color: #981D1D;
 }
 
 .invalid-shake {

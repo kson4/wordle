@@ -16,7 +16,7 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters) {
   words = words.filter((word) => {
     return guess.test(word)
   })
-  console.log(words)
+  // console.log(words)
 
   // remove incorrect letters
   words = words.filter((word) => {

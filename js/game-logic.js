@@ -8,7 +8,7 @@ const incorrectLetters = new Set()
 const correctLetters = new Set()
 
 export async function inputLetter(key) {
-  // console.log(currentColumn, key)
+  console.log(currentColumn, key)
   
   if (key == "Enter") {
     if (currentColumn < 4 || gameTiles[currentRow][4] == "") {
@@ -26,7 +26,7 @@ export async function inputLetter(key) {
     }
   }
   else if (key != "Backspace") {
-    document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = key
+    document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = `${key}`
     gameTiles[currentRow][currentColumn] = key
     updateRowColumn(key)
     removeErrorMessage()
@@ -52,13 +52,13 @@ async function isValidWord() {
 }
 
 export function removeLetter() {
-  console.log(currentColumn)
   if (currentColumn > 0) {
-    currentColumn -= 1
+    if (document.querySelector(`#r${currentRow}c${currentColumn}`).textContent == "") {
+      currentColumn -= 1
+    }
+    document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = ""
+    gameTiles[currentRow][currentColumn] = ""
   }
-  
-  document.querySelector(`#r${currentRow}c${currentColumn}`).textContent = ""
-  gameTiles[currentRow][currentColumn] = ""
 }
 
 function checkWord() {
@@ -102,6 +102,7 @@ function checkWord() {
         tile.classList.add("yellow")
         correctLetters.add(guess[i])
       }
+      // not a match
       else {
         tile.classList.add("red")
         if (guess[i] != wordle[0][i]) {

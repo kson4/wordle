@@ -101,7 +101,7 @@ function checkWord() {
         }
         tile.classList.add("yellow")
         correctLetters.add(guess[i])
-        misplacedWord.push(`[^${guess[i]}]`)
+        misplacedWord.push(`[${guess[i]}]`)
       }
       // not a match
       else {

@@ -35,25 +35,35 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
   // remove words that do not have the misplaced correct letters
   if (correctLetters.size != 0) {
     words = words.filter((word) => {
-      let stay = false
+      let stay = true
       correctLetters.forEach((letter) => {
-        console.log(letter)
-        if (word.includes(letter)) {
-          stay = true
+        // console.log(letter)
+        if (!word.includes(letter)) {
+          stay = false
         }
       })
+      if (!stay) {
+        console.log("REMOVED: ", word)
+      }
       return stay
     })
     console.log("3)", words)
   }
+  // console.log(misplacedWord == "[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]")
   
-
   // remove words that have the same incorrectly placed correct letters
-  words = words.filter((word) => {
-    console.log("removed: ", word)
-    return misplaced.test(word)
-  })
-  console.log("4)", words)
+  if (misplacedWord != "[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]") {
+    words = words.filter((word) => {
+      // console.log("removed: ", word)
+      
+      if (misplaced.test(word)) {
+        // console.log("removed: ", word)
+      }
+      return !misplaced.test(word)
+    })
+    console.log("4)", words)
+  }
+  
 
   console.log("new words: ", words)
   let newSuggestion = words.map((data) => {

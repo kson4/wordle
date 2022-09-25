@@ -1,4 +1,5 @@
 import { inputLetter, invalid, removeLetter, } from "./game-logic.js"
+import { showSuggestions } from "./suggestions.js"
 
 async function getWordleCall() {
   const res = await fetch("https://random-word-api.herokuapp.com/word?length=5")
@@ -13,12 +14,12 @@ console.log(wordle)
 
 const tiles = document.querySelector(".tiles")
 export const gameTiles = [
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""],
-  ["", "", "", "", ""]
+  ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"],
+  ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"],
+  ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"],
+  ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"],
+  ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"],
+  ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"]
 ]
 
 gameTiles.forEach((gameTile, idx) => {

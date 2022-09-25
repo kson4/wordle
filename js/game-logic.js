@@ -1,7 +1,11 @@
-import {gameTiles, wordle} from "./game-setup.js"
+import { gameTiles, wordle } from "./game-setup.js"
+import { showSuggestions } from "./suggestions.js"
+// import {}
 
 let currentRow = 0
 let currentColumn = 0
+const incorrectLetters = new Set()
+const correctLetters = new Set()
 
 export async function inputLetter(key) {
   // console.log(currentColumn, key)
@@ -59,7 +63,7 @@ export function removeLetter() {
 
 function checkWord() {
   const guess = gameTiles[currentRow].join("")
-  if (guess == wordle) {
+  if (guess === wordle) {
     for (let i = 0; i < 5; i++) {
       document.querySelector(`#r${currentRow}c${i}`).classList.add("green")
     }
@@ -82,6 +86,8 @@ function checkWord() {
         else {
           wordleCount.set(wordle[0][i], 1)
         }
+
+        
       }
     }
 
@@ -94,13 +100,27 @@ function checkWord() {
           wordleCount.delete(guess[i])
         }
         tile.classList.add("yellow")
+        correctLetters.add(guess[i])
       }
       else {
         tile.classList.add("red")
+        if (guess[i] != wordle[0][i]) {
+          gameTiles[currentRow][i] = "[a-zA-Z]"
+          if (!wordle[0].includes(guess[i])) {
+            incorrectLetters.add(guess[i])
+          }
+        }
+        console.log(incorrectLetters)
       }
+      
     }
-    console.log(wordleCount)
+    
     updateRowColumn()
+    // console.log(wordleCount)
+    // console.log(incorrectLetters)
+    // console.log(gameTiles[currentRow])
+
+    showSuggestions(gameTiles[currentRow].join(""), incorrectLetters, correctLetters)
   }
 }
 

@@ -1,11 +1,8 @@
 import { gameTiles, wordle } from "./game-setup.js"
 import { showSuggestions } from "./suggestions.js"
-// import {}
 
 let currentRow = 0
 let currentColumn = 0
-const incorrectLetters = new Set()
-const correctLetters = new Set()
 
 export async function inputLetter(key) {
   console.log(currentColumn, key)
@@ -63,6 +60,9 @@ export function removeLetter() {
 
 function checkWord() {
   const guess = gameTiles[currentRow].join("")
+  const incorrectLetters = new Set()
+  const correctLetters = new Set()
+  let misplacedWord = []
   if (guess === wordle) {
     for (let i = 0; i < 5; i++) {
       document.querySelector(`#r${currentRow}c${i}`).classList.add("green")
@@ -101,6 +101,7 @@ function checkWord() {
         }
         tile.classList.add("yellow")
         correctLetters.add(guess[i])
+        misplacedWord.push(`[^${guess[i]}]`)
       }
       // not a match
       else {
@@ -112,16 +113,17 @@ function checkWord() {
           }
         }
         console.log(incorrectLetters)
+        misplacedWord.push("[a-zA-Z]")
       }
-      
     }
+    // misplacedWords.push(misplacedWord)
     
     updateRowColumn()
     // console.log(wordleCount)
     // console.log(incorrectLetters)
     // console.log(gameTiles[currentRow])
-
-    showSuggestions(gameTiles[currentRow].join(""), incorrectLetters, correctLetters)
+    // console.log("misplaced array: ", misplacedWord)
+    showSuggestions(gameTiles[currentRow].join(""), incorrectLetters, correctLetters, misplacedWord.join(""))
   }
 }
 

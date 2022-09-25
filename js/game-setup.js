@@ -1,15 +1,21 @@
 import { inputLetter, invalid, removeLetter, } from "./game-logic.js"
 import { showSuggestions } from "./suggestions.js"
+import { wordList } from "./word-list.js"
 
-async function getWordleCall() {
-  const res = await fetch("https://random-word-api.herokuapp.com/word?length=5")
-  const data = await res.json()
-  document.querySelector(".container").style.visibility = "visible"
-  document.querySelector(".loader").style.visibility = "hidden"
-  return data
-}
+// async function getWordleCall() {
+//   const res = await fetch("https://random-word-api.herokuapp.com/word?length=5")
+//   const data = await res.json()
+//   document.querySelector(".container").style.visibility = "visible"
+//   document.querySelector(".loader").style.visibility = "hidden"
+//   return data
+// }
+// export const wordle = await getWordleCall()
 
-export const wordle = await getWordleCall()
+export const wordle = [wordList[Math.floor(Math.random() * wordList.length)]]
+// export const wordle = ["inlay"]
+document.querySelector(".container").style.visibility = "visible"
+document.querySelector(".loader").style.visibility = "hidden"
+
 console.log(wordle)
 
 const tiles = document.querySelector(".tiles")

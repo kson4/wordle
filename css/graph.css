@@ -1,0 +1,14 @@
+#chart {
+  width: 500px;
+  height: 100px;
+}
+
+canvas {
+  width: 500px;
+  /* padding-left: 200px; */
+  color: white;
+}
+
+.graph {
+  width: 600px;
+}

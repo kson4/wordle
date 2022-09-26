@@ -10,22 +10,15 @@
   <link rel="stylesheet" href="./css/game.css">
   <link rel="stylesheet" href="./css/keyboard.css">
   <link rel="stylesheet" href="./css/suggestions.css">
+  <link rel="stylesheet" href="./css/graph.css">
 </head>
 <body>
   <div class="loader"></div>
   <div class="word-list"></div>
 
-  <div class="suggestions">
-    <div class="search-input">
-      <input type="text" placeHolder="Searching...">
-      <div class="suggestion-list">
-      </div>
-    </div>
-  </div>
 
-  <canvas id="chart">
-    
-  </canvas>
+  
+  
   
   <div class="container">
     
@@ -34,7 +27,20 @@
     </div>
 
     <div class="game">
-      <div class="tiles"></div>
+      <div class="middle">
+        <div class="suggestions">
+          <div class="search-input">
+            <input type="text" placeHolder="Searching...">
+            <div class="suggestion-list">
+            </div>
+          </div>
+        </div>
+        <div class="tiles"></div>
+        <div class="graph">
+          <canvas id="chart"></canvas>
+        </div>
+      </div>
+      
 
       <div class="message">
         <div class="error">

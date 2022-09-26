@@ -80,7 +80,7 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
   showGraph(words)
 }
 
-function showGraph(words) {
+export function showGraph(words) {
   const letters = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   console.log(words)
 
@@ -93,6 +93,8 @@ function showGraph(words) {
   console.log(letters)
   const chart = document.querySelector("#chart").getContext("2d")
   const letterChart = new Chart(chart, {
+    animationEnabled: true,
+    theme: "light1",
     type: "bar",
     data: {
       labels: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",

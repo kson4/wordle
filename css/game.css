@@ -36,6 +36,14 @@
   border-radius: 5px;
 }
 
+.middle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 70px;
+  width: 95%;
+}
+
 .green {
   background-color: #538d4e !important;
 }

@@ -1,5 +1,5 @@
 import { inputLetter, invalid, removeLetter, } from "./game-logic.js"
-import { showSuggestions } from "./suggestions.js"
+import { showSuggestions, showGraph } from "./suggestions.js"
 import { wordList } from "./word-list.js"
 
 // async function getWordleCall() {
@@ -17,6 +17,8 @@ document.querySelector(".container").style.visibility = "visible"
 document.querySelector(".loader").style.visibility = "hidden"
 
 console.log(wordle)
+
+showGraph(wordList)
 
 const tiles = document.querySelector(".tiles")
 export const gameTiles = [

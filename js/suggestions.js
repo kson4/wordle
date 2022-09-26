@@ -20,6 +20,19 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
   })
   console.log("1)", words)
 
+  // remove words that have the same incorrectly placed correct letters
+  if (misplacedWord != "[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]") {
+    words = words.filter((word) => {
+      // console.log("removed: ", word)
+      
+      if (misplaced.test(word)) {
+        // console.log("removed: ", word)
+      }
+      return !misplaced.test(word)
+    })
+    console.log("2)", words)
+  }
+
   // remove incorrect letters
   words = words.filter((word) => {
     let stay = true
@@ -30,7 +43,7 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
     })
     return stay
   })
-  console.log("2)", words)
+  console.log("3)", words)
 
   // remove words that do not have the misplaced correct letters
   if (correctLetters.size != 0) {
@@ -46,20 +59,6 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
         console.log("REMOVED: ", word)
       }
       return stay
-    })
-    console.log("3)", words)
-  }
-  // console.log(misplacedWord == "[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]")
-  
-  // remove words that have the same incorrectly placed correct letters
-  if (misplacedWord != "[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]") {
-    words = words.filter((word) => {
-      // console.log("removed: ", word)
-      
-      if (misplaced.test(word)) {
-        // console.log("removed: ", word)
-      }
-      return !misplaced.test(word)
     })
     console.log("4)", words)
   }

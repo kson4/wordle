@@ -5,8 +5,6 @@ let currentRow = 0
 let currentColumn = 0
 
 export async function inputLetter(key) {
-  console.log(currentColumn, key)
-  
   if (key == "Enter") {
     if (currentColumn < 4 || gameTiles[currentRow][4] == "") {
       invalid()
@@ -36,7 +34,7 @@ async function submitWord() {
     return false
   }
   else {
-    console.log("WORD FOUND")
+    // console.log("WORD FOUND")
     return true
   }
 }
@@ -75,9 +73,7 @@ function checkWord() {
       // match found -- in right spot
       const tile = document.querySelector(`#r${currentRow}c${i}`)
       if (wordle[0][i] == guess[i]) {
-        console.log("match!")
         tile.classList.add("green")
-        
       }
       // not a match -- add it into the map
       else if (wordle[0][i] != guess[i]) {
@@ -112,17 +108,12 @@ function checkWord() {
             incorrectLetters.add(guess[i])
           }
         }
-        console.log(incorrectLetters)
+        // console.log(incorrectLetters)
         misplacedWord.push("[a-zA-Z]")
       }
     }
-    // misplacedWords.push(misplacedWord)
-    
+
     updateRowColumn()
-    // console.log(wordleCount)
-    // console.log(incorrectLetters)
-    // console.log(gameTiles[currentRow])
-    // console.log("misplaced array: ", misplacedWord)
     showSuggestions(gameTiles[currentRow].join(""), incorrectLetters, correctLetters, misplacedWord.join(""))
   }
 }

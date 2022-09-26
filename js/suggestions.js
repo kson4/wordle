@@ -1,21 +1,19 @@
-import {wordList} from "./word-list.js"
+import { wordList } from "./word-list.js"
 
 const searchWrapper = document.querySelector(".search-input")
 const inputBox = searchWrapper.querySelector("input")
 const suggestionList = searchWrapper.querySelector(".suggestion-list")
 
-let words = wordList
+let _words = wordList
 
 export function showSuggestions(words, guessedWord, incorrectLetters, correctLetters, misplacedWord) {
   const guess = new RegExp(guessedWord.join(""))
+  console.log("INITIALLALAL: ", words)
   
   console.log("guessed word: ", guessedWord)
   // console.log("misplaced word: ", misplacedWord)
   console.log("incorrect letters: ", incorrectLetters)
   // console.log("letters in wrong spot: ", correctLetters)
-
-  // console.log(words[0][1])
-  console.log("CAJSDJCSA: ", words)
 
   words = words.filter((word) => {
     return guess.test(word)
@@ -80,29 +78,29 @@ export function showSuggestions(words, guessedWord, incorrectLetters, correctLet
 
   console.log("new suggestions: ", newSuggestion)
   suggestionList.innerHTML = newSuggestion.join("")
-  // showGraph(words)
+  return words
 }
 
 export function showGraph(guessedWord, incorrectLetters, correctLetters, misplacedWord) {
   const letters = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-  console.log(words)
+  // console.log(words)
 
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < _words.length; i++) {
     for (let j = 0; j < 5; j++) {
-      letters[words[i].charCodeAt(j) - 97] += 1
+      letters[_words[i].charCodeAt(j) - 97] += 1
       // console.log(words[i].charCodeAt(j) - 97)
     }
   }
 
   let wordLetterFreq = []
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < _words.length; i++) {
     let value = 0
     for (let j = 0; j < 5; j++) {
-      if (!words[i].slice(j + 1).includes(words[i][j])) {
-        value += letters[words[i].charCodeAt(j) - 97]
+      if (!_words[i].slice(j + 1).includes(_words[i][j])) {
+        value += letters[_words[i].charCodeAt(j) - 97]
       }
     }
-    wordLetterFreq.push([value, words[i]])
+    wordLetterFreq.push([value, _words[i]])
   }
   wordLetterFreq.sort((a, b) => {
     return b[0] - a[0]
@@ -113,15 +111,10 @@ export function showGraph(guessedWord, incorrectLetters, correctLetters, misplac
     getWords.push(arr[1])
   })
 
-  // console.log(wordLetterFreq)
-  // console.log(getWords)
-
-  showSuggestions(getWords, guessedWord, incorrectLetters, correctLetters, misplacedWord)
+  _words = showSuggestions(getWords, guessedWord, incorrectLetters, correctLetters, misplacedWord)
 
   const rendered = document.getElementById("chart")
-  console.log(rendered)
-  if (rendered !== undefined) {
-    
+  if (rendered !== null) {
     rendered.remove()
   }
   const chart = document.createElement("canvas")
@@ -140,4 +133,5 @@ export function showGraph(guessedWord, incorrectLetters, correctLetters, misplac
     }
   })
   document.querySelector(".graph").append(chart)
+  return getWords
 }

@@ -60,7 +60,7 @@ function checkWord() {
   const guess = gameTiles[currentRow].join("")
   const incorrectLetters = new Set()
   const correctLetters = new Set()
-  let misplacedWord = []
+  let misplacedWords = []
   if (guess === wordle) {
     for (let i = 0; i < 5; i++) {
       document.querySelector(`#r${currentRow}c${i}`).classList.add("green")
@@ -77,7 +77,7 @@ function checkWord() {
       }
       // not a match -- add it into the map
       else {
-        console.log("CHECK: ", wordle[0], guess, i, wordle[0][i], guess[i])
+        // console.log("CHECK: ", wordle[0], guess, i, wordle[0][i], guess[i])
         if (wordleCount.has(wordle[0][i])) {
           wordleCount.set(wordle[0][i], wordleCount.get(wordle[0][i]) + 1)
         }
@@ -87,9 +87,8 @@ function checkWord() {
         gameTiles[currentRow][i] = "[a-zA-z]"
       }
     }
-    console.log("WORDLECOUNT: ", wordleCount)
 
-    
+    let misplacedWord = ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"]
     for (let i = 0; i < 5; i++) {
       const tile = document.querySelector(`#r${currentRow}c${i}`)
       // match found -- not in right spot
@@ -100,13 +99,19 @@ function checkWord() {
         }
         tile.classList.add("yellow")
         correctLetters.add(guess[i])
-        if (wordle[0][i] != guess[i]) {
-          misplacedWord.push(`[${guess[i]}]`)
-        }
-        else {
-          misplacedWord.push("[a-zA-Z]")
-        }
         
+        // refactor this
+        if (wordle[0][i] != guess[i]) {
+          let copy = []
+          for (let j = 0; j < i; j++) {
+            copy.push("[a-zA-Z]")
+          }
+          copy.push(`[${guess[i]}]`)
+          for (let j = i; j < 4; j++) {
+            copy.push("[a-zA-Z]")
+          }
+          misplacedWords.push(copy)
+        }
       }
       // not a match
       else {
@@ -118,12 +123,12 @@ function checkWord() {
           }
         }
         // console.log(incorrectLetters)
-        misplacedWord.push("[a-zA-Z]")
+        // misplacedWord.push("[a-zA-Z]")
       }
     }
 
     updateRowColumn()
-    showSuggestions(gameTiles[currentRow].join(""), incorrectLetters, correctLetters, misplacedWord.join(""))
+    showSuggestions(gameTiles[currentRow], incorrectLetters, correctLetters, misplacedWords)
   }
 }
 

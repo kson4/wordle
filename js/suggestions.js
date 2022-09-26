@@ -7,10 +7,10 @@ const suggestionList = searchWrapper.querySelector(".suggestion-list")
 let words = wordList
 
 export function showSuggestions(guessedWord, incorrectLetters, correctLetters, misplacedWord) {
-  const guess = new RegExp(guessedWord)
-  const misplaced = new RegExp(misplacedWord)
+  const guess = new RegExp(guessedWord.join(""))
+  
   console.log("guessed word: ", guessedWord)
-  console.log("misplaced word: ", misplacedWord)
+  // console.log("misplaced word: ", misplacedWord)
   console.log("incorrect letters: ", incorrectLetters)
   // console.log("letters in wrong spot: ", correctLetters)
 
@@ -18,17 +18,23 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
     return guess.test(word)
   })
   console.log("1)", words)
+
   // remove words that have the same incorrectly placed correct letters
-  if (misplacedWord != "[a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z][a-zA-Z]") {
-    words = words.filter((word) => {
-      if (misplaced.test(word)) {
-        console.log("removed same incorrect: ", word)
-      }
-      return !misplaced.test(word)
-    })
+  if (misplacedWord.length != 0) {
+    for (let i = 0; i < misplacedWord.length; i++) {
+      const misplaced = new RegExp(misplacedWord[i].join(""))
+      words = words.filter((word) => {
+        // console.log(word)
+        // console.log(word, misplaced.test(word))
+        if (misplaced.test(word)) {
+          console.log("removed same incorrect: ", word)
+        }
+        return !misplaced.test(word)
+      })
+    }
     console.log("2)", words)
   }
-
+  
   // remove incorrect letters
   words = words.filter((word) => {
     let stay = true
@@ -39,9 +45,9 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
         incorrectLetter = letter
       }
     })
-    if (stay == false) {
-      console.log("incorrect letters: ", word, " contains: ", incorrectLetter)
-    }
+    // if (stay == false) {
+    //   console.log("incorrect letters: ", word, " contains: ", incorrectLetter)
+    // }
     return stay
   })
   console.log("3)", words)

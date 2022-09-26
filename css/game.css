@@ -44,6 +44,10 @@
   width: 95%;
 }
 
+.tiles, .suggestions {
+  padding-left: 175px;
+}
+
 .green {
   background-color: #538d4e !important;
 }

@@ -76,7 +76,8 @@ function checkWord() {
         tile.classList.add("green")
       }
       // not a match -- add it into the map
-      else if (wordle[0][i] != guess[i]) {
+      else {
+        console.log("CHECK: ", wordle[0], guess, i, wordle[0][i], guess[i])
         if (wordleCount.has(wordle[0][i])) {
           wordleCount.set(wordle[0][i], wordleCount.get(wordle[0][i]) + 1)
         }
@@ -86,7 +87,9 @@ function checkWord() {
         gameTiles[currentRow][i] = "[a-zA-z]"
       }
     }
+    console.log("WORDLECOUNT: ", wordleCount)
 
+    
     for (let i = 0; i < 5; i++) {
       const tile = document.querySelector(`#r${currentRow}c${i}`)
       // match found -- not in right spot
@@ -97,7 +100,13 @@ function checkWord() {
         }
         tile.classList.add("yellow")
         correctLetters.add(guess[i])
-        misplacedWord.push(`[${guess[i]}]`)
+        if (wordle[0][i] != guess[i]) {
+          misplacedWord.push(`[${guess[i]}]`)
+        }
+        else {
+          misplacedWord.push("[a-zA-Z]")
+        }
+        
       }
       // not a match
       else {

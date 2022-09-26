@@ -5757,3 +5757,5 @@ export const wordList = [
   "biffy",
   "pupal"
 ]
+
+wordList.sort()

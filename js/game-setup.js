@@ -28,7 +28,7 @@ export const gameTiles = [
   ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"]
 ]
 
-showGraph(wordList, gameTiles[0], new Set(), [], [])
+showGraph(gameTiles[0], new Set(), [], [])
 
 gameTiles.forEach((gameTile, idx) => {
   const row = document.createElement("div")

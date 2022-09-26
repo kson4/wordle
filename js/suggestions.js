@@ -4,7 +4,7 @@ const searchWrapper = document.querySelector(".search-input")
 const inputBox = searchWrapper.querySelector("input")
 const suggestionList = searchWrapper.querySelector(".suggestion-list")
 
-// let words = wordList
+let words = wordList
 
 export function showSuggestions(words, guessedWord, incorrectLetters, correctLetters, misplacedWord) {
   const guess = new RegExp(guessedWord.join(""))
@@ -15,6 +15,7 @@ export function showSuggestions(words, guessedWord, incorrectLetters, correctLet
   // console.log("letters in wrong spot: ", correctLetters)
 
   // console.log(words[0][1])
+  console.log("CAJSDJCSA: ", words)
 
   words = words.filter((word) => {
     return guess.test(word)
@@ -82,7 +83,7 @@ export function showSuggestions(words, guessedWord, incorrectLetters, correctLet
   // showGraph(words)
 }
 
-export function showGraph(words, guessedWord, incorrectLetters, correctLetters, misplacedWord) {
+export function showGraph(guessedWord, incorrectLetters, correctLetters, misplacedWord) {
   const letters = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   console.log(words)
 
@@ -97,7 +98,9 @@ export function showGraph(words, guessedWord, incorrectLetters, correctLetters, 
   for (let i = 0; i < words.length; i++) {
     let value = 0
     for (let j = 0; j < 5; j++) {
-      value += letters[words[i].charCodeAt(j) - 97]
+      if (!words[i].slice(j + 1).includes(words[i][j])) {
+        value += letters[words[i].charCodeAt(j) - 97]
+      }
     }
     wordLetterFreq.push([value, words[i]])
   }
@@ -107,14 +110,22 @@ export function showGraph(words, guessedWord, incorrectLetters, correctLetters, 
 
   let getWords = []
   wordLetterFreq.forEach((arr) => {
-    // console.log(arr)
     getWords.push(arr[1])
   })
+
+  // console.log(wordLetterFreq)
   // console.log(getWords)
 
   showSuggestions(getWords, guessedWord, incorrectLetters, correctLetters, misplacedWord)
 
-  const chart = document.querySelector("#chart").getContext("2d")
+  const rendered = document.getElementById("chart")
+  console.log(rendered)
+  if (rendered !== undefined) {
+    
+    rendered.remove()
+  }
+  const chart = document.createElement("canvas")
+  chart.setAttribute("id", "chart")
   const letterChart = new Chart(chart, {
     animationEnabled: true,
     theme: "light1",
@@ -128,4 +139,5 @@ export function showGraph(words, guessedWord, incorrectLetters, correctLetters, 
       }]
     }
   })
+  document.querySelector(".graph").append(chart)
 }

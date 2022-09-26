@@ -52,23 +52,23 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
   })
   console.log("3)", words)
 
-  // // remove words that do not have the misplaced correct letters
-  // if (correctLetters.size != 0) {
-  //   words = words.filter((word) => {
-  //     let stay = true
-  //     correctLetters.forEach((letter) => {
-  //       // console.log(letter)
-  //       if (!word.includes(letter)) {
-  //         stay = false
-  //       }
-  //     })
-  //     if (!stay) {
-  //       // console.log("REMOVED: ", word)
-  //     }
-  //     return stay
-  //   })
-  //   console.log("4)", words)
-  // }
+  // remove words that do not have the misplaced correct letters
+  if (correctLetters.size != 0) {
+    words = words.filter((word) => {
+      let stay = true
+      correctLetters.forEach((letter) => {
+        // console.log(letter)
+        if (!word.includes(letter)) {
+          stay = false
+        }
+      })
+      if (!stay) {
+        // console.log("REMOVED: ", word)
+      }
+      return stay
+    })
+    console.log("4)", words)
+  }
 
   console.log("new words: ", words)
   let newSuggestion = words.map((data) => {
@@ -77,5 +77,30 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
 
   console.log("new suggestions: ", newSuggestion)
   suggestionList.innerHTML = newSuggestion.join("")
+  showGraph(words)
+}
 
+function showGraph(words) {
+  const letters = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+  console.log(words)
+
+  for (let i = 0; i < words.length; i++) {
+    for (let j = 0; j < 5; j++) {
+      letters[words[i].charCodeAt(j) - 97] += 1
+      // console.log(words[i].charCodeAt(j) - 97)
+    }
+  }
+  console.log(letters)
+  const chart = document.querySelector("#chart").getContext("2d")
+  const letterChart = new Chart(chart, {
+    type: "bar",
+    data: {
+      labels: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+               "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+      datasets: [{
+        label: "frequency",
+        data: letters
+      }]
+    }
+  })
 }

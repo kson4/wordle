@@ -11,8 +11,8 @@ import { wordList } from "./word-list.js"
 // }
 // export const wordle = await getWordleCall()
 
-// export const wordle = [wordList[Math.floor(Math.random() * wordList.length)]]
-export const wordle = ["throe"]
+export const wordle = [wordList[Math.floor(Math.random() * wordList.length)]]
+// export const wordle = ["throe"]
 document.querySelector(".container").style.visibility = "visible"
 document.querySelector(".loader").style.visibility = "hidden"
 

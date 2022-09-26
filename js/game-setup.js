@@ -18,8 +18,6 @@ document.querySelector(".loader").style.visibility = "hidden"
 
 console.log(wordle)
 
-showGraph(wordList)
-
 const tiles = document.querySelector(".tiles")
 export const gameTiles = [
   ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"],
@@ -29,6 +27,8 @@ export const gameTiles = [
   ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"],
   ["[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]", "[a-zA-Z]"]
 ]
+
+showGraph(wordList, gameTiles[0], new Set(), [], [])
 
 gameTiles.forEach((gameTile, idx) => {
   const row = document.createElement("div")

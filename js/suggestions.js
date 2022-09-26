@@ -4,15 +4,17 @@ const searchWrapper = document.querySelector(".search-input")
 const inputBox = searchWrapper.querySelector("input")
 const suggestionList = searchWrapper.querySelector(".suggestion-list")
 
-let words = wordList
+// let words = wordList
 
-export function showSuggestions(guessedWord, incorrectLetters, correctLetters, misplacedWord) {
+export function showSuggestions(words, guessedWord, incorrectLetters, correctLetters, misplacedWord) {
   const guess = new RegExp(guessedWord.join(""))
   
   console.log("guessed word: ", guessedWord)
   // console.log("misplaced word: ", misplacedWord)
   console.log("incorrect letters: ", incorrectLetters)
   // console.log("letters in wrong spot: ", correctLetters)
+
+  // console.log(words[0][1])
 
   words = words.filter((word) => {
     return guess.test(word)
@@ -77,10 +79,10 @@ export function showSuggestions(guessedWord, incorrectLetters, correctLetters, m
 
   console.log("new suggestions: ", newSuggestion)
   suggestionList.innerHTML = newSuggestion.join("")
-  showGraph(words)
+  // showGraph(words)
 }
 
-export function showGraph(words) {
+export function showGraph(words, guessedWord, incorrectLetters, correctLetters, misplacedWord) {
   const letters = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
   console.log(words)
 
@@ -90,7 +92,28 @@ export function showGraph(words) {
       // console.log(words[i].charCodeAt(j) - 97)
     }
   }
-  console.log(letters)
+
+  let wordLetterFreq = []
+  for (let i = 0; i < words.length; i++) {
+    let value = 0
+    for (let j = 0; j < 5; j++) {
+      value += letters[words[i].charCodeAt(j) - 97]
+    }
+    wordLetterFreq.push([value, words[i]])
+  }
+  wordLetterFreq.sort((a, b) => {
+    return b[0] - a[0]
+  })
+
+  let getWords = []
+  wordLetterFreq.forEach((arr) => {
+    // console.log(arr)
+    getWords.push(arr[1])
+  })
+  // console.log(getWords)
+
+  showSuggestions(getWords, guessedWord, incorrectLetters, correctLetters, misplacedWord)
+
   const chart = document.querySelector("#chart").getContext("2d")
   const letterChart = new Chart(chart, {
     animationEnabled: true,

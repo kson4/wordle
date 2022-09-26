@@ -1,5 +1,5 @@
 import { gameTiles, wordle } from "./game-setup.js"
-import { showSuggestions } from "./suggestions.js"
+import { showSuggestions, showGraph } from "./suggestions.js"
 
 let currentRow = 0
 let currentColumn = 0
@@ -128,7 +128,7 @@ function checkWord() {
     }
 
     updateRowColumn()
-    showSuggestions(gameTiles[currentRow], incorrectLetters, correctLetters, misplacedWords)
+    showGraph(gameTiles[currentRow], incorrectLetters, correctLetters, misplacedWords)
   }
 }
 

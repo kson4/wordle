@@ -1,5 +1,5 @@
 .game {
-  width: 90%;
+  width: 95%;
   height: 90vh;
   margin: auto;
 
@@ -34,18 +34,21 @@
   text-transform: uppercase;
   background-color: gray;
   border-radius: 5px;
+  transition: background-color 0.5s;
 }
 
 .middle {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 70px;
   width: 95%;
 }
-
-.tiles, .suggestions {
-  padding-left: 175px;
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 95vh;
 }
 
 .green {
@@ -60,16 +63,6 @@
 
 .invalid-shake {
   animation: invalid-shake 0.25s infinite;
-}
-
-.blinking {
-  /* width: 75%;
-  height: 2px;
-  border: 1px solid red */
-  /* position: relative;
-  top: 40%; */
-  width: 30px;
-  border: 1px solid black;
 }
 
 @keyframes invalid-shake {

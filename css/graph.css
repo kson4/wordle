@@ -1,14 +1,17 @@
 #chart {
   width: 500px;
   height: 100px;
+  
 }
 
 canvas {
   width: 500px;
   /* padding-left: 200px; */
   color: white;
+  /* padding-bottom: 350px; */
 }
 
 .graph {
   width: 600px;
+  padding-bottom: 350px;
 }
